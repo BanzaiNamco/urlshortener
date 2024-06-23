@@ -18,3 +18,5 @@ const controller = {
         res.redirect(url);
     }
 }
+
+export default controller;
