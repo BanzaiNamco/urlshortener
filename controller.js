@@ -4,17 +4,18 @@ const controller = {
     // GET /api/users
     shortenURL: (req, res) => {
         let url = req.body.url;
+        const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
+
+        if (!urlPattern.test(url)) {
+            res.send({ error: 'invalid url' });
+        }
         let index = urls.length;
+        
         urls.push(url);
         res.send({ original_url: url, short_url: index });
     },
     getURL: (req, res) => {
         let index = req.params.index;
-        // check if url is valid format
-        const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
-        if (!urlPattern.test(urls[index])) {
-            res.send({ error: 'invalid url' });
-        }
 
         if (index >= urls.length) {
             res.send({ error: 'invalid url' });
